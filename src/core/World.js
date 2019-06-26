@@ -527,7 +527,8 @@ Object.assign( World.prototype, {
             var b1 = contact.body1;
             var b2 = contact.body2;
 
-            if( b1.isDynamic && !b1.sleeping || b2.isDynamic && !b2.sleeping ) contact.updateManifold();
+            // https://github.com/lo-th/Oimo.js/issues/63
+            if(( b1.isDynamic && !b1.sleeping || b2.isDynamic && !b2.sleeping ) && (!b1.isSensor && !b2.isSensor) ) contact.updateManifold();
 
             this.numContactPoints += contact.manifold.numPoints;
             contact.persisting = false;

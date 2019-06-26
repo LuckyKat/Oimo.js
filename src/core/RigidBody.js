@@ -94,6 +94,9 @@ function RigidBody ( Position, Rotation ) {
 
     this.isKinematic = false;
 
+    // https://github.com/lo-th/Oimo.js/issues/63
+    this.isSensor = false;
+
     // It is a rotation matrix representing the orientation.
     this.rotation = new Mat33();
 

@@ -5842,6 +5842,9 @@
 
 	    this.isKinematic = false;
 
+	    // https://github.com/lo-th/Oimo.js/issues/63
+	    this.isSensor = false;
+
 	    // It is a rotation matrix representing the orientation.
 	    this.rotation = new Mat33();
 
@@ -11750,7 +11753,8 @@
 	            var b1 = contact.body1;
 	            var b2 = contact.body2;
 
-	            if( b1.isDynamic && !b1.sleeping || b2.isDynamic && !b2.sleeping ) contact.updateManifold();
+	            // https://github.com/lo-th/Oimo.js/issues/63
+	            if(( b1.isDynamic && !b1.sleeping || b2.isDynamic && !b2.sleeping ) && (!b1.isSensor && !b2.isSensor) ) contact.updateManifold();
 
 	            this.numContactPoints += contact.manifold.numPoints;
 	            contact.persisting = false;
@@ -12206,59 +12210,54 @@
 
 	} );
 
-	// test version
-
-	//export { RigidBody } from './core/RigidBody_X.js';
-	//export { World } from './core/World_X.js';
-
-	exports.Math = _Math;
-	exports.Vec3 = Vec3;
-	exports.Quat = Quat;
-	exports.Mat33 = Mat33;
-	exports.Shape = Shape;
-	exports.Box = Box;
-	exports.Sphere = Sphere;
-	exports.Cylinder = Cylinder;
-	exports.Plane = Plane;
-	exports.Particle = Particle;
-	exports.ShapeConfig = ShapeConfig;
-	exports.LimitMotor = LimitMotor;
-	exports.HingeJoint = HingeJoint;
-	exports.BallAndSocketJoint = BallAndSocketJoint;
-	exports.DistanceJoint = DistanceJoint;
-	exports.PrismaticJoint = PrismaticJoint;
-	exports.SliderJoint = SliderJoint;
-	exports.WheelJoint = WheelJoint;
-	exports.JointConfig = JointConfig;
-	exports.RigidBody = RigidBody;
-	exports.World = World;
-	exports.REVISION = REVISION;
-	exports.BR_NULL = BR_NULL;
-	exports.BR_BRUTE_FORCE = BR_BRUTE_FORCE;
-	exports.BR_SWEEP_AND_PRUNE = BR_SWEEP_AND_PRUNE;
-	exports.BR_BOUNDING_VOLUME_TREE = BR_BOUNDING_VOLUME_TREE;
-	exports.BODY_NULL = BODY_NULL;
+	exports.AABB_PROX = AABB_PROX;
 	exports.BODY_DYNAMIC = BODY_DYNAMIC;
-	exports.BODY_STATIC = BODY_STATIC;
-	exports.BODY_KINEMATIC = BODY_KINEMATIC;
 	exports.BODY_GHOST = BODY_GHOST;
-	exports.SHAPE_NULL = SHAPE_NULL;
-	exports.SHAPE_SPHERE = SHAPE_SPHERE;
+	exports.BODY_KINEMATIC = BODY_KINEMATIC;
+	exports.BODY_NULL = BODY_NULL;
+	exports.BODY_STATIC = BODY_STATIC;
+	exports.BR_BOUNDING_VOLUME_TREE = BR_BOUNDING_VOLUME_TREE;
+	exports.BR_BRUTE_FORCE = BR_BRUTE_FORCE;
+	exports.BR_NULL = BR_NULL;
+	exports.BR_SWEEP_AND_PRUNE = BR_SWEEP_AND_PRUNE;
+	exports.BallAndSocketJoint = BallAndSocketJoint;
+	exports.Box = Box;
+	exports.Cylinder = Cylinder;
+	exports.DistanceJoint = DistanceJoint;
+	exports.HingeJoint = HingeJoint;
+	exports.InfoDisplay = InfoDisplay;
+	exports.JOINT_BALL_AND_SOCKET = JOINT_BALL_AND_SOCKET;
+	exports.JOINT_DISTANCE = JOINT_DISTANCE;
+	exports.JOINT_HINGE = JOINT_HINGE;
+	exports.JOINT_NULL = JOINT_NULL;
+	exports.JOINT_PRISMATIC = JOINT_PRISMATIC;
+	exports.JOINT_SLIDER = JOINT_SLIDER;
+	exports.JOINT_WHEEL = JOINT_WHEEL;
+	exports.JointConfig = JointConfig;
+	exports.LimitMotor = LimitMotor;
+	exports.Mat33 = Mat33;
+	exports.Math = _Math;
+	exports.Particle = Particle;
+	exports.Plane = Plane;
+	exports.PrismaticJoint = PrismaticJoint;
+	exports.Quat = Quat;
+	exports.REVISION = REVISION;
+	exports.RigidBody = RigidBody;
 	exports.SHAPE_BOX = SHAPE_BOX;
 	exports.SHAPE_CYLINDER = SHAPE_CYLINDER;
-	exports.SHAPE_PLANE = SHAPE_PLANE;
+	exports.SHAPE_NULL = SHAPE_NULL;
 	exports.SHAPE_PARTICLE = SHAPE_PARTICLE;
+	exports.SHAPE_PLANE = SHAPE_PLANE;
+	exports.SHAPE_SPHERE = SHAPE_SPHERE;
 	exports.SHAPE_TETRA = SHAPE_TETRA;
-	exports.JOINT_NULL = JOINT_NULL;
-	exports.JOINT_DISTANCE = JOINT_DISTANCE;
-	exports.JOINT_BALL_AND_SOCKET = JOINT_BALL_AND_SOCKET;
-	exports.JOINT_HINGE = JOINT_HINGE;
-	exports.JOINT_WHEEL = JOINT_WHEEL;
-	exports.JOINT_SLIDER = JOINT_SLIDER;
-	exports.JOINT_PRISMATIC = JOINT_PRISMATIC;
-	exports.AABB_PROX = AABB_PROX;
+	exports.Shape = Shape;
+	exports.ShapeConfig = ShapeConfig;
+	exports.SliderJoint = SliderJoint;
+	exports.Sphere = Sphere;
+	exports.Vec3 = Vec3;
+	exports.WheelJoint = WheelJoint;
+	exports.World = World;
 	exports.printError = printError;
-	exports.InfoDisplay = InfoDisplay;
 
 	Object.defineProperty(exports, '__esModule', { value: true });
 

@@ -5836,6 +5836,9 @@ function RigidBody ( Position, Rotation ) {
 
     this.isKinematic = false;
 
+    // https://github.com/lo-th/Oimo.js/issues/63
+    this.isSensor = false;
+
     // It is a rotation matrix representing the orientation.
     this.rotation = new Mat33();
 
@@ -11744,7 +11747,8 @@ Object.assign( World.prototype, {
             var b1 = contact.body1;
             var b2 = contact.body2;
 
-            if( b1.isDynamic && !b1.sleeping || b2.isDynamic && !b2.sleeping ) contact.updateManifold();
+            // https://github.com/lo-th/Oimo.js/issues/63
+            if(( b1.isDynamic && !b1.sleeping || b2.isDynamic && !b2.sleeping ) && (!b1.isSensor && !b2.isSensor) ) contact.updateManifold();
 
             this.numContactPoints += contact.manifold.numPoints;
             contact.persisting = false;
@@ -12200,9 +12204,4 @@ Object.assign( World.prototype, {
 
 } );
 
-// test version
-
-//export { RigidBody } from './core/RigidBody_X.js';
-//export { World } from './core/World_X.js';
-
-export { _Math as Math, Vec3, Quat, Mat33, Shape, Box, Sphere, Cylinder, Plane, Particle, ShapeConfig, LimitMotor, HingeJoint, BallAndSocketJoint, DistanceJoint, PrismaticJoint, SliderJoint, WheelJoint, JointConfig, RigidBody, World, REVISION, BR_NULL, BR_BRUTE_FORCE, BR_SWEEP_AND_PRUNE, BR_BOUNDING_VOLUME_TREE, BODY_NULL, BODY_DYNAMIC, BODY_STATIC, BODY_KINEMATIC, BODY_GHOST, SHAPE_NULL, SHAPE_SPHERE, SHAPE_BOX, SHAPE_CYLINDER, SHAPE_PLANE, SHAPE_PARTICLE, SHAPE_TETRA, JOINT_NULL, JOINT_DISTANCE, JOINT_BALL_AND_SOCKET, JOINT_HINGE, JOINT_WHEEL, JOINT_SLIDER, JOINT_PRISMATIC, AABB_PROX, printError, InfoDisplay };
+export { AABB_PROX, BODY_DYNAMIC, BODY_GHOST, BODY_KINEMATIC, BODY_NULL, BODY_STATIC, BR_BOUNDING_VOLUME_TREE, BR_BRUTE_FORCE, BR_NULL, BR_SWEEP_AND_PRUNE, BallAndSocketJoint, Box, Cylinder, DistanceJoint, HingeJoint, InfoDisplay, JOINT_BALL_AND_SOCKET, JOINT_DISTANCE, JOINT_HINGE, JOINT_NULL, JOINT_PRISMATIC, JOINT_SLIDER, JOINT_WHEEL, JointConfig, LimitMotor, Mat33, _Math as Math, Particle, Plane, PrismaticJoint, Quat, REVISION, RigidBody, SHAPE_BOX, SHAPE_CYLINDER, SHAPE_NULL, SHAPE_PARTICLE, SHAPE_PLANE, SHAPE_SPHERE, SHAPE_TETRA, Shape, ShapeConfig, SliderJoint, Sphere, Vec3, WheelJoint, World, printError };
