@@ -11747,6 +11747,14 @@ Object.assign( World.prototype, {
             var b1 = contact.body1;
             var b2 = contact.body2;
 
+            // clean up contact if any of the bodies was removed
+            if (!b1.parent || !b2.parent) {
+                next = contact.next;
+                this.removeContact(contact);
+                contact = next;
+                continue;
+            }
+
             // https://github.com/lo-th/Oimo.js/issues/63
             if(( b1.isDynamic && !b1.sleeping || b2.isDynamic && !b2.sleeping ) && (!b1.isSensor && !b2.isSensor) ) contact.updateManifold();
 
